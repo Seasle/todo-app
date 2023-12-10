@@ -12,7 +12,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
   const isOverdue = toDate(task.expiresIn ?? '').getTime() < Date.now();
 
   return (
-    <Paper shadow="sm" p="lg">
+    <Paper shadow="md" p="lg">
       <Stack>
         <Flex justify="space-between" align="center">
           <Group>

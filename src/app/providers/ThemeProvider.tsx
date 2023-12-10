@@ -4,5 +4,9 @@ import { MantineProvider, createTheme } from '@mantine/core';
 const theme = createTheme({});
 
 export const ThemeProvider = ({ children }: PropsWithChildren<unknown>) => {
-  return <MantineProvider theme={theme}>{children}</MantineProvider>;
+  return (
+    <MantineProvider theme={theme} defaultColorScheme="dark">
+      {children}
+    </MantineProvider>
+  );
 };
