@@ -13,7 +13,12 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
   ],
-  ignorePatterns: ['.eslintrc.cjs', '.prettierrc.cjs', '.lintstagedrc.cjs'],
+  ignorePatterns: [
+    '.eslintrc.cjs',
+    '.prettierrc.cjs',
+    '.lintstagedrc.cjs',
+    'postcss.config.cjs',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',

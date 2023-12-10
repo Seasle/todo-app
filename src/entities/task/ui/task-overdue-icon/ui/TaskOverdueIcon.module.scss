@@ -1,0 +1,21 @@
+.icon {
+  animation: flame-flashing 8s linear infinite;
+}
+
+@keyframes flame-flashing {
+  0%,
+  100% {
+    fill: var(--mantine-color-orange-6);
+    stroke: var(--mantine-color-orange-8);
+  }
+
+  33.3% {
+    fill: var(--mantine-color-red-6);
+    stroke: var(--mantine-color-red-8);
+  }
+
+  66.6% {
+    fill: var(--mantine-color-yellow-6);
+    stroke: var(--mantine-color-yellow-8);
+  }
+}

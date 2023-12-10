@@ -1,0 +1,27 @@
+.task-progress {
+  height: 8px;
+  border-radius: var(--mantine-radius-md);
+  background-color: var(--mantine-color-gray-2);
+
+  &__line {
+    position: relative;
+    height: 100%;
+    border-radius: var(--mantine-radius-md);
+    background-image: linear-gradient(
+      to right,
+      var(--mantine-color-yellow-6),
+      var(--mantine-color-grape-6)
+    );
+    transition: width 0.15s ease-in-out;
+
+    &::before {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background-image: inherit;
+      opacity: 0.5;
+      filter: blur(8px);
+      content: '';
+    }
+  }
+}
