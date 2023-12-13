@@ -1,4 +1,9 @@
-import { IconAsterisk, IconProgress, IconCheck } from '@tabler/icons-react';
+import {
+  IconAsterisk,
+  IconProgress,
+  IconCheck,
+  IconInfinity,
+} from '@tabler/icons-react';
 import {
   TaskPriorityIcon,
   TaskOverdueIcon,
@@ -41,6 +46,7 @@ export const completedValues: CompletedFilterValue[] = [
 
 export const overdueValues: OverdueFilterValue[] = [
   { value: 'ANY', icon: <IconAsterisk />, label: 'Любые задачи' },
+  { value: 'UNKNOWN', icon: <IconInfinity />, label: 'Задачи без срока' },
   {
     value: 'YES',
     icon: <TaskOverdueIcon />,

@@ -20,13 +20,17 @@ export const toCompleted = (value: boolean | undefined) => {
   return 'ANY';
 };
 
-export const toOverdue = (value: boolean | undefined) => {
+export const toOverdue = (value: boolean | null | undefined) => {
   if (value === true) {
     return 'YES';
   }
 
   if (value === false) {
     return 'NO';
+  }
+
+  if (value === null) {
+    return 'UNKNOWN';
   }
 
   return 'ANY';
@@ -55,6 +59,8 @@ export const fromOverdue = (value: string) => {
     return true;
   } else if (value === 'NO') {
     return false;
+  } else if (value === 'UNKNOWN') {
+    return null;
   }
 
   return undefined;

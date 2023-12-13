@@ -15,8 +15,12 @@ export const compareText = (
 
 export const compareExpiresIn = (
   value: string | undefined,
-  isOverdue: boolean,
+  isOverdue: boolean | null,
 ) => {
+  if (isOverdue === null) {
+    return value === undefined;
+  }
+
   if (value === undefined) {
     return false;
   }

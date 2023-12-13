@@ -8,7 +8,7 @@ export type QueryConfig = Partial<{
   text: string;
   priority: TaskPriority;
   isCompleted: boolean;
-  isOverdue: boolean;
+  isOverdue: boolean | null;
 }>;
 
 const setQueryConfig = createEvent<QueryConfig>();

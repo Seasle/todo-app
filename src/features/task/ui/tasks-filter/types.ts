@@ -13,4 +13,4 @@ export type CompletedFilterValue = FilterValue<
   'NOT_COMPLETED' | 'COMPLETED' | 'ANY'
 >;
 
-export type OverdueFilterValue = FilterValue<'YES' | 'NO' | 'ANY'>;
+export type OverdueFilterValue = FilterValue<'YES' | 'NO' | 'UNKNOWN' | 'ANY'>;
