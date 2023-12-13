@@ -1,4 +1,4 @@
-import { Paper, Stack, Group, Flex, Text } from '@mantine/core';
+import { Paper, Stack, Group, Flex, Text, Button } from '@mantine/core';
 import { TaskOverdueIcon, TaskPriorityIcon, TaskProgress } from '../..';
 import { toDate, humanizedDate } from '@/shared/utils';
 import { type Task } from '@/shared/types';
@@ -17,7 +17,9 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         <Flex justify="space-between" align="center">
           <Group>
             {isOverdue && <TaskOverdueIcon />}
-            <Text size="lg">{task.title}</Text>
+            <Text size="lg" td={task.isCompleted ? 'line-through' : 'unset'}>
+              {task.title}
+            </Text>
           </Group>
           <TaskPriorityIcon variant={priority} />
         </Flex>
@@ -35,7 +37,13 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             {task.expiresIn && (
               <Text size="xs">Сделать до {humanizedDate(task.expiresIn)}</Text>
             )}
+            {task.completedIn && (
+              <Text size="xs">Сделана {humanizedDate(task.completedIn)}</Text>
+            )}
           </Group>
+          <Button color={task.isCompleted ? 'red' : 'green'} size="xs">
+            {task.isCompleted ? 'Переоткрыть' : 'Завершить'}
+          </Button>
         </Flex>
       </Stack>
     </Paper>

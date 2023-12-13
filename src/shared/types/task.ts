@@ -5,6 +5,7 @@ export interface Task {
   priority?: TaskPriority;
   createdAt: string;
   expiresIn?: string;
+  completedIn?: string;
   isCompleted: boolean;
 }
 

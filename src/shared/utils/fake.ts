@@ -87,16 +87,26 @@ const generateCreatedAt = () => {
   return new Date(now + offset).toISOString();
 };
 
-const generateExpiresIn = () => {
+const generateExpiresIn = (start: string) => {
   if (tryProbability(EXPIRES_IN_PROBABILITY)) {
     if (tryProbability(OVERDUE_PROBABILITY)) {
       return new Date().toISOString();
     }
 
-    const now = Date.now();
+    const now = Date.parse(start);
     const duration = random(MIN_DURATION, MAX_DURATION);
 
     return new Date(now + duration).toISOString();
+  }
+
+  return undefined;
+};
+
+const generateCompletedIn = (start: string, isCompleted: boolean) => {
+  if (isCompleted) {
+    const now = Date.parse(start);
+
+    return new Date(now).toISOString();
   }
 
   return undefined;
@@ -106,15 +116,27 @@ const generateIsCompleted = () => {
   return tryProbability(IS_COMPLETED_PROBABILITY);
 };
 
-const generateFakeTask = (): Task => ({
-  id: generateId(),
-  title: generateTitle(),
-  description: generateDescription(),
-  priority: generatePriority(),
-  createdAt: generateCreatedAt(),
-  expiresIn: generateExpiresIn(),
-  isCompleted: generateIsCompleted(),
-});
+const generateFakeTask = (): Task => {
+  const id = generateId();
+  const title = generateTitle();
+  const description = generateDescription();
+  const priority = generatePriority();
+  const isCompleted = generateIsCompleted();
+  const createdAt = generateCreatedAt();
+  const expiresIn = generateExpiresIn(createdAt);
+  const completedIn = generateCompletedIn(expiresIn ?? createdAt, isCompleted);
+
+  return {
+    id,
+    title,
+    description,
+    priority,
+    createdAt,
+    expiresIn,
+    completedIn,
+    isCompleted,
+  };
+};
 
 export const generateFakeTasks = (count: number) =>
   new Array(count).fill(null).map(() => generateFakeTask());
