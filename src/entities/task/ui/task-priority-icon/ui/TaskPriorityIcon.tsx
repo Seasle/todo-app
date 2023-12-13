@@ -1,4 +1,5 @@
 import { type CSSProperties } from 'react';
+import { useMantineTheme } from '@mantine/core';
 import {
   IconHourglassHigh,
   IconHourglassEmpty,
@@ -11,20 +12,21 @@ export interface TaskPriorityIconProps {
 }
 
 export const TaskPriorityIcon = ({ variant }: TaskPriorityIconProps) => {
+  const theme = useMantineTheme();
   const style: CSSProperties = {
     flexShrink: 0,
   };
 
   if (variant === 'HIGH') {
-    return <IconHourglassHigh style={style} />;
+    return <IconHourglassHigh style={style} color={theme.colors.red[6]} />;
   }
 
   if (variant === 'NORMAL') {
-    return <IconHourglassEmpty style={style} />;
+    return <IconHourglassEmpty style={style} color={theme.colors.yellow[6]} />;
   }
 
   if (variant === 'LOW') {
-    return <IconHourglassLow style={style} />;
+    return <IconHourglassLow style={style} color={theme.colors.indigo[6]} />;
   }
 
   return null;
