@@ -1,4 +1,4 @@
-import { createStore, createEffect, combine } from 'effector';
+import { createStore, createEvent, createEffect, combine } from 'effector';
 import { useUnit } from 'effector-react';
 import { persist } from 'effector-storage';
 import { $queryConfig } from './query-config';
@@ -11,6 +11,8 @@ import {
 } from '@/shared/utils';
 import { type Task, type TaskId } from '@/shared/types';
 
+const toggleTask = createEvent<TaskId>();
+
 const loadTasksFx = createEffect(() => {
   return generateFakeTasks(20).reduce<Record<TaskId, Task>>((acc, entry) => {
     acc[entry.id] = entry;
@@ -19,10 +21,15 @@ const loadTasksFx = createEffect(() => {
   }, {});
 });
 
-export const $tasks = createStore<Record<TaskId, Task>>({}).on(
-  loadTasksFx.doneData,
-  (_, payload) => payload,
-);
+export const $tasks = createStore<Record<TaskId, Task>>({})
+  .on(loadTasksFx.doneData, (_, payload) => payload)
+  .on(toggleTask, (store, taskId) => ({
+    ...store,
+    [taskId]: {
+      ...store[taskId],
+      isCompleted: !store[taskId].isCompleted,
+    },
+  }));
 
 export const $tasksList = combine($tasks, (tasks) => Object.values(tasks));
 
@@ -47,6 +54,10 @@ persist({
 });
 const useTasks = () => {
   return useUnit($tasksFiltered);
+};
+
+export const events = {
+  toggleTask,
 };
 
 export const effects = {
