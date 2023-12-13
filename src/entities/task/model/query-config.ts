@@ -5,6 +5,7 @@ import { createStorageAdapter } from '@/shared/utils';
 import { type TaskPriority } from '@/shared/types';
 
 export type QueryConfig = Partial<{
+  text: string;
   priority: TaskPriority;
   isCompleted: boolean;
   isOverdue: boolean;
@@ -12,10 +13,11 @@ export type QueryConfig = Partial<{
 
 const setQueryConfig = createEvent<QueryConfig>();
 
-export const $queryConfig = createStore<QueryConfig>({}).on(
-  setQueryConfig,
-  (store, payload) => ({ ...store, ...payload }),
-);
+const resetQueryConfig = createEvent();
+
+export const $queryConfig = createStore<QueryConfig>({})
+  .on(setQueryConfig, (store, payload) => ({ ...store, ...payload }))
+  .on(resetQueryConfig, () => ({}));
 
 persist({
   key: 'query-config',
@@ -29,6 +31,7 @@ const useQuery = () => {
 
 export const events = {
   setQueryConfig,
+  resetQueryConfig,
 };
 
 export const selectors = {

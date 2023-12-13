@@ -2,7 +2,7 @@ import { createStore, createEffect, combine } from 'effector';
 import { useUnit } from 'effector-react';
 import { persist } from 'effector-storage';
 import { $queryConfig } from './query-config';
-import { compareExpiresIn } from '../utils';
+import { compareText, compareExpiresIn } from '../utils';
 import {
   createStorageAdapter,
   compareIf,
@@ -32,6 +32,8 @@ export const $tasksFiltered = combine(
   (tasks, query) =>
     tasks.filter(
       (task) =>
+        (customCompareIf(task.title, query.text, compareText) ||
+          customCompareIf(task.title, query.text, compareText)) &&
         compareIf(task.priority, query.priority) &&
         compareIf(task.isCompleted, query.isCompleted) &&
         customCompareIf(task.expiresIn, query.isOverdue, compareExpiresIn),
