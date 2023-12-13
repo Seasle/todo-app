@@ -1,23 +1,16 @@
 import { type JSX } from 'react';
 import { type TaskPriority } from '@/shared/types';
 
-interface FilterValue<Value, Icon> {
+export interface FilterValue<Value> {
   value: Value;
-  icon: Icon;
+  icon: JSX.Element | null;
   label: string;
 }
 
-export type PriorityFilterValue = FilterValue<
-  TaskPriority | 'ANY',
-  TaskPriority | null
->;
+export type PriorityFilterValue = FilterValue<TaskPriority | 'ANY'>;
 
 export type CompletedFilterValue = FilterValue<
-  'NOT_COMPLETED' | 'COMPLETED' | 'ANY',
-  JSX.Element | null
+  'NOT_COMPLETED' | 'COMPLETED' | 'ANY'
 >;
 
-export type OverdueFilterValue = FilterValue<
-  'YES' | 'NO' | 'ANY',
-  JSX.Element | null
->;
+export type OverdueFilterValue = FilterValue<'YES' | 'NO' | 'ANY'>;

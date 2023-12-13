@@ -1,5 +1,9 @@
-import { IconProgress, IconCheck } from '@tabler/icons-react';
-import { TaskOverdueIcon, TaskNonOverdueIcon } from '@/entities/task';
+import { IconAsterisk, IconProgress, IconCheck } from '@tabler/icons-react';
+import {
+  TaskPriorityIcon,
+  TaskOverdueIcon,
+  TaskNonOverdueIcon,
+} from '@/entities/task';
 import {
   type PriorityFilterValue,
   type CompletedFilterValue,
@@ -7,14 +11,26 @@ import {
 } from './types';
 
 export const priorityValues: PriorityFilterValue[] = [
-  { value: 'ANY', icon: null, label: 'Любой приоритет' },
-  { value: 'HIGH', icon: 'HIGH', label: 'Высокий приоритет' },
-  { value: 'NORMAL', icon: 'NORMAL', label: 'Обычный приоритет' },
-  { value: 'LOW', icon: 'LOW', label: 'Низкий приоритет' },
+  { value: 'ANY', icon: <IconAsterisk />, label: 'Любой приоритет' },
+  {
+    value: 'HIGH',
+    icon: <TaskPriorityIcon variant="HIGH" />,
+    label: 'Высокий приоритет',
+  },
+  {
+    value: 'NORMAL',
+    icon: <TaskPriorityIcon variant="NORMAL" />,
+    label: 'Обычный приоритет',
+  },
+  {
+    value: 'LOW',
+    icon: <TaskPriorityIcon variant="LOW" />,
+    label: 'Низкий приоритет',
+  },
 ];
 
 export const completedValues: CompletedFilterValue[] = [
-  { value: 'ANY', icon: null, label: 'Любые задачи' },
+  { value: 'ANY', icon: <IconAsterisk />, label: 'Любые задачи' },
   {
     value: 'NOT_COMPLETED',
     icon: <IconProgress />,
@@ -24,7 +40,7 @@ export const completedValues: CompletedFilterValue[] = [
 ];
 
 export const overdueValues: OverdueFilterValue[] = [
-  { value: 'ANY', icon: null, label: 'Любые задачи' },
+  { value: 'ANY', icon: <IconAsterisk />, label: 'Любые задачи' },
   {
     value: 'YES',
     icon: <TaskOverdueIcon />,

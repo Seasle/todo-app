@@ -1,10 +1,10 @@
 import {
   Paper,
   Stack,
+  Group,
   Center,
   SegmentedControl,
   Text,
-  Group,
 } from '@mantine/core';
 import {
   toPriority,
@@ -15,7 +15,21 @@ import {
   fromOverdue,
 } from '../utils';
 import { priorityValues, completedValues, overdueValues } from '../const';
-import { TaskPriorityIcon, taskQueryModel } from '@/entities/task';
+import { type FilterValue } from '../types';
+import { taskQueryModel } from '@/entities/task';
+
+const renderFilterLabel = <T extends FilterValue<unknown>>(entry: T) => {
+  if (entry.icon !== null) {
+    return (
+      <Center style={{ gap: 10 }}>
+        {entry.icon}
+        {entry.label}
+      </Center>
+    );
+  }
+
+  return entry.label;
+};
 
 export const TasksFilter = () => {
   const query = taskQueryModel.selectors.useQuery();
@@ -44,15 +58,7 @@ export const TasksFilter = () => {
             value={priorityValue}
             data={priorityValues.map((entry) => ({
               value: entry.value,
-              label:
-                entry.icon !== null ? (
-                  <Center style={{ gap: 10 }}>
-                    <TaskPriorityIcon variant={entry.icon} />
-                    {entry.label}
-                  </Center>
-                ) : (
-                  entry.label
-                ),
+              label: renderFilterLabel(entry),
             }))}
             onChange={onPriorityChange}
           />
@@ -60,15 +66,7 @@ export const TasksFilter = () => {
             value={completedValue}
             data={completedValues.map((entry) => ({
               value: entry.value,
-              label:
-                entry.icon !== null ? (
-                  <Center style={{ gap: 10 }}>
-                    {entry.icon}
-                    {entry.label}
-                  </Center>
-                ) : (
-                  entry.label
-                ),
+              label: renderFilterLabel(entry),
             }))}
             onChange={onCompletedChange}
           />
@@ -76,15 +74,7 @@ export const TasksFilter = () => {
             value={overdueValue}
             data={overdueValues.map((entry) => ({
               value: entry.value,
-              label:
-                entry.icon !== null ? (
-                  <Center style={{ gap: 10 }}>
-                    {entry.icon}
-                    {entry.label}
-                  </Center>
-                ) : (
-                  entry.label
-                ),
+              label: renderFilterLabel(entry),
             }))}
             onChange={onOverdueChange}
           />
