@@ -3,7 +3,7 @@ import { TasksList } from '@/widgets/task';
 
 export const MainPage = () => {
   return (
-    <Container>
+    <Container p="xl">
       <TasksList />
     </Container>
   );
