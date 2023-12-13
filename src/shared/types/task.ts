@@ -1,5 +1,7 @@
+import { Flavor } from './common';
+
 export interface Task {
-  id: string;
+  id: TaskId;
   title: string;
   description?: string;
   priority?: TaskPriority;
@@ -8,5 +10,7 @@ export interface Task {
   completedIn?: string;
   isCompleted: boolean;
 }
+
+export type TaskId = Flavor<string, 'TaskId'>;
 
 export type TaskPriority = 'HIGH' | 'NORMAL' | 'LOW';
