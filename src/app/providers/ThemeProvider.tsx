@@ -5,7 +5,7 @@ const theme = createTheme({});
 
 export const ThemeProvider = ({ children }: PropsWithChildren<unknown>) => {
   return (
-    <MantineProvider theme={theme} defaultColorScheme="dark">
+    <MantineProvider theme={theme} defaultColorScheme="auto">
       {children}
     </MantineProvider>
   );
