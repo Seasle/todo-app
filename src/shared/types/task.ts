@@ -1,4 +1,4 @@
-import { Flavor } from './common';
+import { type Flavor } from './common';
 
 export type TaskId = Flavor<string, 'TaskId'>;
 
