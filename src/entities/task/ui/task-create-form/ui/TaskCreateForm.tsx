@@ -26,6 +26,8 @@ interface TaskCreateFormValues {
   expiresIn: Date | null;
 }
 
+const today = new Date();
+
 export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
   const { ref, key } = useDelayedKeyOnResize(50);
   const form = useForm<TaskCreateFormValues>({
@@ -79,6 +81,7 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
               label="Срок выполнения"
               placeholder="А он нужен?"
               valueFormat="DD.MM.YYYY"
+              minDate={today}
               rightSection={
                 <CloseButton
                   aria-label="Очистить поле"
