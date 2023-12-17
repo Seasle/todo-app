@@ -11,7 +11,6 @@ export const ToTop = () => {
         {(styles) => (
           <Button
             style={styles}
-            color="green"
             leftSection={
               <IconArrowUp style={{ width: rem(16), height: rem(16) }} />
             }

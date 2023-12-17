@@ -4,11 +4,10 @@ import {
   Grid,
   Stack,
   Group,
-  Center,
   TextInput,
+  SegmentedControl,
   Button,
   CloseButton,
-  SegmentedControl,
   Text,
 } from '@mantine/core';
 import {
@@ -20,21 +19,8 @@ import {
   fromOverdue,
 } from '../utils';
 import { priorityValues, completedValues, overdueValues } from '../const';
-import { type FilterValue } from '../types';
 import { taskQueryModel } from '@/entities/task';
-
-const renderFilterLabel = <T extends FilterValue<unknown>>(entry: T) => {
-  if (entry.icon !== null) {
-    return (
-      <Center style={{ gap: 10 }}>
-        {entry.icon}
-        {entry.label}
-      </Center>
-    );
-  }
-
-  return entry.label;
-};
+import { ChoiceItem } from '@/shared/ui';
 
 export const TasksFilter = () => {
   const query = taskQueryModel.selectors.useQuery();
@@ -105,7 +91,7 @@ export const TasksFilter = () => {
             value={priorityValue}
             data={priorityValues.map((entry) => ({
               value: entry.value,
-              label: renderFilterLabel(entry),
+              label: <ChoiceItem value={entry} />,
             }))}
             onChange={onPriorityChange}
           />
@@ -113,7 +99,7 @@ export const TasksFilter = () => {
             value={completedValue}
             data={completedValues.map((entry) => ({
               value: entry.value,
-              label: renderFilterLabel(entry),
+              label: <ChoiceItem value={entry} />,
             }))}
             onChange={onCompletedChange}
           />
@@ -121,7 +107,7 @@ export const TasksFilter = () => {
             value={overdueValue}
             data={overdueValues.map((entry) => ({
               value: entry.value,
-              label: renderFilterLabel(entry),
+              label: <ChoiceItem value={entry} />,
             }))}
             onChange={onOverdueChange}
           />

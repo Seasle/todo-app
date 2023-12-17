@@ -1,7 +1,9 @@
 import { type PropsWithChildren } from 'react';
 import { MantineProvider, createTheme } from '@mantine/core';
 
-const theme = createTheme({});
+const theme = createTheme({
+  primaryColor: 'green',
+});
 
 export const ThemeProvider = ({ children }: PropsWithChildren<unknown>) => {
   return (

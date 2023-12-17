@@ -1,6 +1,9 @@
-import { ThemeProvider } from './providers/ThemeProvider';
-import { DateProvider } from './providers/DateProvider';
-import { Routing } from './providers/Routing';
+import {
+  ThemeProvider,
+  DateProvider,
+  ModalProvider,
+  Routing,
+} from './providers';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/spotlight/styles.css';
@@ -10,7 +13,9 @@ export const App = () => {
   return (
     <ThemeProvider>
       <DateProvider>
-        <Routing />
+        <ModalProvider>
+          <Routing />
+        </ModalProvider>
       </DateProvider>
     </ThemeProvider>
   );

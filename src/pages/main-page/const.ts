@@ -1,7 +1,14 @@
 import { type SpotlightActionData } from '@mantine/spotlight';
-import { taskQueryModel } from '@/entities/task';
+import { taskQueryModel, openCreateTaskModal } from '@/entities/task';
 
 export const actions: SpotlightActionData[] = [
+  {
+    id: 'create-task',
+    label: 'Создать задачу',
+    description: 'Нам нужна новая задача - создадим её',
+    keywords: ['task', 'create', 'new'],
+    onClick: () => openCreateTaskModal(),
+  },
   {
     id: 'any-priority',
     label: 'Любой приоритет',

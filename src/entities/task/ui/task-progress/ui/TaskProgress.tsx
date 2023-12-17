@@ -1,4 +1,4 @@
-import { useProgress } from '@/shared/hooks/use-progress';
+import { useProgress } from '@/shared/hooks';
 import classes from './TaskProgress.module.scss';
 
 export interface TaskProgressProps {

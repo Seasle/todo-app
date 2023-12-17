@@ -8,7 +8,7 @@ export const FilteredTasks = () => {
 
   if (isEmpty) {
     return (
-      <Alert title="Задач нет" icon={<IconInfoSquareRounded />} color="green">
+      <Alert title="Задач нет" icon={<IconInfoSquareRounded />}>
         По текущим настройкам фильтра задачи не найдены.
       </Alert>
     );

@@ -9,7 +9,6 @@ export interface TaskCardProps {
 }
 
 export const TaskCard = ({ task }: TaskCardProps) => {
-  const priority = task.priority ?? 'NORMAL';
   const isOverdue = toDate(task.expiresIn ?? '').getTime() < Date.now();
 
   const onToggleClick = () => {
@@ -26,7 +25,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               {task.title}
             </Text>
           </Group>
-          <TaskPriorityIcon variant={priority} />
+          <TaskPriorityIcon variant={task.priority} />
         </Flex>
         {task.description && <Text size="sm">{task.description}</Text>}
         {task.expiresIn && (

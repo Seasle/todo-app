@@ -1,6 +1,6 @@
+import { Outlet } from 'react-router-dom';
 import { AppShell, Container, Flex } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
-import { Outlet } from 'react-router-dom';
 import { ThemeSwitcher, ToTop } from '../..';
 
 export const Layout = () => {

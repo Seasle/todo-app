@@ -1,16 +1,19 @@
 import { Flavor } from './common';
 
-export interface Task {
-  id: TaskId;
+export type TaskId = Flavor<string, 'TaskId'>;
+
+export interface TaskBase {
   title: string;
   description?: string;
-  priority?: TaskPriority;
-  createdAt: string;
+  priority: TaskPriority;
   expiresIn?: string;
+}
+
+export interface Task extends TaskBase {
+  id: TaskId;
+  createdAt: string;
   completedIn?: string;
   isCompleted: boolean;
 }
-
-export type TaskId = Flavor<string, 'TaskId'>;
 
 export type TaskPriority = 'HIGH' | 'NORMAL' | 'LOW';
