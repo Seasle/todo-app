@@ -35,8 +35,11 @@ export const TasksFilter = () => {
     query.isOverdue === undefined;
 
   const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+    const isEmpty = value.length === 0;
+
     taskQueryModel.events.setQueryConfig({
-      text: event.currentTarget.value,
+      text: !isEmpty ? value : undefined,
     });
   };
 
