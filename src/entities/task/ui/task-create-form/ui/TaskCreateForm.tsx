@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import {
   Grid,
   Stack,
@@ -42,9 +42,16 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
         value.trim().length === 0 ? 'Название задачи обязательно' : null,
     },
   });
+  const isSubmitting = useRef(false);
 
   const onFormSubmit = useCallback(
     (values: TaskCreateFormValues) => {
+      if (isSubmitting.current) {
+        return;
+      }
+
+      isSubmitting.current = true;
+
       taskModel.events.addTask({
         title: values.title,
         description: values.description,
@@ -53,6 +60,10 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
       });
 
       context.closeContextModal(id);
+
+      window.requestIdleCallback(() => {
+        isSubmitting.current = false;
+      });
     },
     [id, context],
   );
@@ -116,7 +127,11 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
           {...form.getInputProps('priority')}
         />
         <Center>
-          <Button type="submit" leftSection={<IconCheck />}>
+          <Button
+            type="submit"
+            leftSection={<IconCheck />}
+            disabled={isSubmitting.current}
+          >
             Создать
           </Button>
         </Center>
