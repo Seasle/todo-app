@@ -8,10 +8,13 @@ import {
   createStorageAdapter,
   compareIf,
   customCompareIf,
+  excludeKey,
 } from '@/shared/utils';
 import { type TaskBase, type Task, type TaskId } from '@/shared/types';
 
 const addTask = createEvent<TaskBase>();
+
+const removeTask = createEvent<TaskId>();
 
 const toggleTask = createEvent<TaskId>();
 
@@ -36,6 +39,7 @@ export const $tasks = createStore<Record<TaskId, Task>>({})
       },
     };
   })
+  .on(removeTask, (store, taskId) => excludeKey(store, taskId))
   .on(toggleTask, (store, taskId) => {
     const isCompleted = !store[taskId].isCompleted;
 
@@ -76,6 +80,7 @@ const useTasks = () => {
 
 export const events = {
   addTask,
+  removeTask,
   toggleTask,
 };
 

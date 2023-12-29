@@ -27,3 +27,10 @@ export const compareIf = <T>(value: T, needle: T | undefined) => {
 
 export const clamp = (min: number, max: number, value: number) =>
   Math.max(min, Math.min(max, value));
+
+export const excludeKey = <T, K extends keyof T>(entry: T, key: K) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { [key]: _, ...data } = entry;
+
+  return data;
+};

@@ -1,5 +1,6 @@
 import { Paper, Stack, Group, Flex, Text, Button } from '@mantine/core';
 import { TaskOverdueIcon, TaskPriorityIcon, TaskProgress } from '../..';
+import { DeleteButton } from '@/shared/ui';
 import { toDate, humanizedDate } from '@/shared/utils';
 import { type Task } from '@/shared/types';
 import { taskModel } from '@/entities/task';
@@ -10,6 +11,10 @@ export interface TaskCardProps {
 
 export const TaskCard = ({ task }: TaskCardProps) => {
   const isOverdue = toDate(task.expiresIn ?? '').getTime() < Date.now();
+
+  const onDeleteClick = () => {
+    taskModel.events.removeTask(task.id);
+  };
 
   const onToggleClick = () => {
     taskModel.events.toggleTask(task.id);
@@ -25,7 +30,10 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               {task.title}
             </Text>
           </Group>
-          <TaskPriorityIcon variant={task.priority} />
+          <Group>
+            <TaskPriorityIcon variant={task.priority} />
+            <DeleteButton onClick={onDeleteClick} />
+          </Group>
         </Flex>
         {task.description && <Text size="sm">{task.description}</Text>}
         {task.expiresIn && (
