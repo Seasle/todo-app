@@ -68,10 +68,6 @@ export const $tasksToDelete = createStore<TaskId[]>([])
     store.filter((entry) => entry !== taskId),
   );
 
-$tasksToDelete.watch((s) => {
-  console.log(s);
-});
-
 export const $tasksList = combine(
   $tasks,
   $tasksToDelete,
@@ -107,13 +103,14 @@ const useTasks = () => {
 };
 
 const useTask = (id?: TaskId) => {
-  const unit = useUnit($tasks);
+  const tasks = useUnit($tasks);
+  const tasksToDelete = useUnit($tasksToDelete);
 
-  if (id === undefined) {
+  if (id === undefined || tasksToDelete.includes(id)) {
     return null;
   }
 
-  return unit?.[id] ?? null;
+  return tasks?.[id] ?? null;
 };
 
 export const events = {
