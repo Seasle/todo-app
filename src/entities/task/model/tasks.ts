@@ -14,6 +14,8 @@ import { type TaskBase, type Task, type TaskId } from '@/shared/types';
 
 const addTask = createEvent<TaskBase>();
 
+const modifyTask = createEvent<{ id: TaskId } & TaskBase>();
+
 const removeTask = createEvent<TaskId>();
 
 const toggleTask = createEvent<TaskId>();
@@ -45,6 +47,22 @@ export const $tasks = createStore<Record<TaskId, Task>>({})
         expiresIn,
         completedIn: undefined,
         isCompleted: false,
+      },
+    };
+  })
+  .on(modifyTask, (store, { id, ...taskBase }) => {
+    const title = taskBase.title.trim();
+    const description = taskBase.description ? taskBase.description : undefined;
+    const expiresIn = taskBase.expiresIn ?? undefined;
+
+    return {
+      ...store,
+      [id]: {
+        ...store[id],
+        title,
+        description,
+        priority: taskBase.priority,
+        expiresIn,
       },
     };
   })
@@ -115,6 +133,7 @@ const useTask = (id?: TaskId) => {
 
 export const events = {
   addTask,
+  modifyTask,
   removeTask,
   toggleTask,
   markTaskToRemove,

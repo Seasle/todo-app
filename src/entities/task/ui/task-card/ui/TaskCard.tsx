@@ -37,10 +37,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               {task.title}
             </Text>
           </Group>
-          <Group>
-            <TaskPriorityIcon variant={task.priority} />
-            <TaskDeleteButton task={task} />
-          </Group>
+          <TaskPriorityIcon variant={task.priority} />
         </Flex>
         {task.description && <Text size="sm">{task.description}</Text>}
         {task.expiresIn && (
@@ -60,13 +57,16 @@ export const TaskCard = ({ task }: TaskCardProps) => {
               <Text size="xs">Сделана {humanizedDate(task.completedIn)}</Text>
             )}
           </Group>
-          <Button
-            size="xs"
-            color={task.isCompleted ? 'red' : 'green'}
-            onClick={onToggleClick}
-          >
-            {task.isCompleted ? 'Переоткрыть' : 'Завершить'}
-          </Button>
+          <Group>
+            <TaskDeleteButton task={task} />
+            <Button
+              size="xs"
+              color={task.isCompleted ? 'red' : 'green'}
+              onClick={onToggleClick}
+            >
+              {task.isCompleted ? 'Переоткрыть' : 'Завершить'}
+            </Button>
+          </Group>
         </Flex>
       </Stack>
     </Paper>

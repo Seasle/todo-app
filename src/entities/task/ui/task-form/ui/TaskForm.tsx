@@ -11,31 +11,36 @@ import {
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
-import { type ContextModalProps } from '@mantine/modals';
 import { IconCheck } from '@tabler/icons-react';
-import { taskModel } from '@/entities/task';
 import { priorityValues } from '../const';
 import { ChoiceItem } from '@/shared/ui';
 import { useDelayedKeyOnResize } from '@/shared/hooks';
-import { type TaskPriority } from '@/shared/types';
+import { type Task, type TaskPriority } from '@/shared/types';
 
-interface TaskCreateFormValues {
+const today = new Date();
+
+export interface TaskFormValues {
   title: string;
   description: string;
   priority: TaskPriority;
   expiresIn: Date | null;
 }
 
-const today = new Date();
+export interface TaskFormProps {
+  data?: Task | null;
+  submitText: string;
+  onSubmit: (values: TaskFormValues) => Promise<void>;
+}
 
-export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
+export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
   const { ref, key } = useDelayedKeyOnResize(50);
-  const form = useForm<TaskCreateFormValues>({
+  const form = useForm<TaskFormValues>({
     initialValues: {
-      title: '',
-      description: '',
-      priority: 'NORMAL',
-      expiresIn: null,
+      title: data?.title ?? '',
+      description: data?.description ?? '',
+      priority: data?.priority ?? 'NORMAL',
+      expiresIn:
+        data?.expiresIn !== undefined ? new Date(data.expiresIn) : null,
     },
     validate: {
       title: (value) =>
@@ -45,27 +50,20 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
   const isSubmitting = useRef(false);
 
   const onFormSubmit = useCallback(
-    (values: TaskCreateFormValues) => {
+    (values: TaskFormValues) => {
       if (isSubmitting.current) {
         return;
       }
 
       isSubmitting.current = true;
 
-      taskModel.events.addTask({
-        title: values.title,
-        description: values.description,
-        priority: values.priority,
-        expiresIn: values.expiresIn?.toISOString(),
-      });
-
-      context.closeContextModal(id);
-
-      window.requestIdleCallback(() => {
-        isSubmitting.current = false;
+      void onSubmit(values).finally(() => {
+        window.requestIdleCallback(() => {
+          isSubmitting.current = false;
+        });
       });
     },
-    [id, context],
+    [onSubmit],
   );
 
   return (
@@ -132,7 +130,7 @@ export const TaskCreateForm = ({ id, context }: ContextModalProps) => {
             leftSection={<IconCheck />}
             disabled={isSubmitting.current}
           >
-            Создать
+            {submitText}
           </Button>
         </Center>
       </Stack>
