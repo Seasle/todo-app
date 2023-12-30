@@ -1,0 +1,16 @@
+.filters {
+  gap: var(--mantine-spacing-md);
+  display: flex;
+
+  &:global(.horizontal) {
+    flex-direction: column;
+  }
+
+  &:global(.vertical) {
+    flex-direction: column;
+
+    & > * {
+      width: 100%;
+    }
+  }
+}

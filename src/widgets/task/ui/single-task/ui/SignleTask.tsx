@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { SimpleGrid, Stack, Button } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import { IconArrowLeft, IconEdit } from '@tabler/icons-react';
 import { TaskView } from '@/features/task';
 import { type TaskId } from '@/shared/types';
@@ -10,7 +11,9 @@ export interface SingleTaskProps {
 }
 
 export const SingleTask = ({ id }: SingleTaskProps) => {
+  const { width } = useViewportSize();
   const navigate = useNavigate();
+  const orientation = width < 1024 ? 'vertical' : 'horizontal';
 
   const onBackClick = () => {
     navigate(-1);
@@ -26,7 +29,7 @@ export const SingleTask = ({ id }: SingleTaskProps) => {
 
   return (
     <Stack>
-      <SimpleGrid cols={2}>
+      <SimpleGrid cols={orientation === 'vertical' ? 1 : 2}>
         <Button
           size="lg"
           color="gray"

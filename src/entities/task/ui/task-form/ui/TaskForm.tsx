@@ -11,6 +11,7 @@ import {
 } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
+import { useViewportSize } from '@mantine/hooks';
 import { IconCheck } from '@tabler/icons-react';
 import { priorityValues } from '../const';
 import { ChoiceItem } from '@/shared/ui';
@@ -33,6 +34,7 @@ export interface TaskFormProps {
 }
 
 export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
+  const { width } = useViewportSize();
   const { ref, key } = useDelayedKeyOnResize(50);
   const form = useForm<TaskFormValues>({
     initialValues: {
@@ -48,6 +50,7 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
     },
   });
   const isSubmitting = useRef(false);
+  const orientation = width < 1024 ? 'vertical' : 'horizontal';
 
   const onFormSubmit = useCallback(
     (values: TaskFormValues) => {
@@ -70,7 +73,7 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
     <form onSubmit={form.onSubmit(onFormSubmit)}>
       <Stack ref={ref}>
         <Grid>
-          <Grid.Col span="auto">
+          <Grid.Col span={orientation === 'horizontal' ? 'auto' : 12}>
             <TextInput
               label="Название задачи"
               placeholder="Что будем делать?"
@@ -85,7 +88,7 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
               {...form.getInputProps('title')}
             />
           </Grid.Col>
-          <Grid.Col span="content">
+          <Grid.Col span={orientation === 'horizontal' ? 'content' : 12}>
             <DateInput
               label="Срок выполнения"
               placeholder="А он нужен?"
@@ -121,6 +124,8 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
             value: entry.value,
             label: <ChoiceItem value={entry} />,
           }))}
+          fullWidth={orientation === 'vertical'}
+          orientation={orientation}
           key={key}
           {...form.getInputProps('priority')}
         />

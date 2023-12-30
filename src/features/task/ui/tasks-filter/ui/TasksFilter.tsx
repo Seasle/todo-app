@@ -3,13 +3,14 @@ import {
   Paper,
   Grid,
   Stack,
-  Group,
   TextInput,
   SegmentedControl,
   Button,
   CloseButton,
   Text,
 } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
+import clsx from 'clsx';
 import {
   toPriority,
   toCompleted,
@@ -21,8 +22,10 @@ import {
 import { priorityValues, completedValues, overdueValues } from '../const';
 import { taskQueryModel } from '@/entities/task';
 import { ChoiceItem } from '@/shared/ui';
+import classes from './TasksFilter.module.scss';
 
 export const TasksFilter = () => {
+  const { width } = useViewportSize();
   const query = taskQueryModel.selectors.useQuery();
   const textValue = query.text ?? '';
   const priorityValue = toPriority(query.priority);
@@ -33,6 +36,7 @@ export const TasksFilter = () => {
     query.priority === undefined &&
     query.isCompleted === undefined &&
     query.isOverdue === undefined;
+  const orientation = width < 1024 ? 'vertical' : 'horizontal';
 
   const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
@@ -68,7 +72,7 @@ export const TasksFilter = () => {
       <Stack>
         <Text size="lg">Фильтр задач</Text>
         <Grid align="end">
-          <Grid.Col span="auto">
+          <Grid.Col span={orientation === 'horizontal' ? 'auto' : 12}>
             <TextInput
               label="Текст в названии или описании"
               placeholder="Ищем любые задачи"
@@ -83,19 +87,25 @@ export const TasksFilter = () => {
               onChange={onTextChange}
             />
           </Grid.Col>
-          <Grid.Col span="content">
-            <Button color="red" disabled={isEmpty} onClick={onResetClick}>
+          <Grid.Col span={orientation === 'horizontal' ? 'content' : 12}>
+            <Button
+              fullWidth
+              color="red"
+              disabled={isEmpty}
+              onClick={onResetClick}
+            >
               Сбросить
             </Button>
           </Grid.Col>
         </Grid>
-        <Group>
+        <div className={clsx(classes.filters, orientation)}>
           <SegmentedControl
             value={priorityValue}
             data={priorityValues.map((entry) => ({
               value: entry.value,
               label: <ChoiceItem value={entry} />,
             }))}
+            orientation={orientation}
             onChange={onPriorityChange}
           />
           <SegmentedControl
@@ -104,6 +114,7 @@ export const TasksFilter = () => {
               value: entry.value,
               label: <ChoiceItem value={entry} />,
             }))}
+            orientation={orientation}
             onChange={onCompletedChange}
           />
           <SegmentedControl
@@ -112,9 +123,10 @@ export const TasksFilter = () => {
               value: entry.value,
               label: <ChoiceItem value={entry} />,
             }))}
+            orientation={orientation}
             onChange={onOverdueChange}
           />
-        </Group>
+        </div>
       </Stack>
     </Paper>
   );

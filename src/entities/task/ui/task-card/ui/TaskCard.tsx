@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Paper, Stack, Group, Flex, Text, Button } from '@mantine/core';
+import { Paper, Stack, Group, Flex, Text, Button, rem } from '@mantine/core';
+import { useViewportSize } from '@mantine/hooks';
 import {
   TaskOverdueIcon,
   TaskPriorityIcon,
@@ -15,8 +16,10 @@ export interface TaskCardProps {
 }
 
 export const TaskCard = ({ task }: TaskCardProps) => {
+  const { width } = useViewportSize();
   const linkTo = `/${task.id}`;
   const isOverdue = toDate(task.expiresIn ?? '').getTime() < Date.now();
+  const orientation = width < 1024 ? 'vertical' : 'horizontal';
 
   const onToggleClick = () => {
     taskModel.events.toggleTask(task.id);
@@ -47,7 +50,11 @@ export const TaskCard = ({ task }: TaskCardProps) => {
             autoUpdate={!task.isCompleted}
           />
         )}
-        <Flex justify="space-between">
+        <Flex
+          direction={orientation === 'horizontal' ? 'row' : 'column'}
+          gap={orientation === 'horizontal' ? rem(0) : rem(16)}
+          justify="space-between"
+        >
           <Group>
             <Text size="xs">Создана {humanizedDate(task.createdAt)}</Text>
             {task.expiresIn && (
