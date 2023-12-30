@@ -10,9 +10,16 @@ export const Routing = () => {
         {
           index: true,
           lazy: () =>
-            import('@/pages/main-page').then(({ MainPage: Component }) => ({
-              Component,
-            })),
+            import('@/pages/all-tasks-page').then(
+              ({ AllTasksPage: Component }) => ({ Component }),
+            ),
+        },
+        {
+          path: ':taskId',
+          lazy: () =>
+            import('@/pages/task-details-page').then(
+              ({ TaskDetailsPage: Component }) => ({ Component }),
+            ),
         },
         {
           path: '*',

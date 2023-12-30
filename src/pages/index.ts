@@ -1,1 +1,2 @@
-export * from './main-page';
+export * from './all-tasks-page';
+export * from './task-details-page';

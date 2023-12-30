@@ -74,8 +74,19 @@ persist({
   store: $tasks,
   adapter: createStorageAdapter(),
 });
+
 const useTasks = () => {
   return useUnit($tasksFiltered);
+};
+
+const useTask = (id?: TaskId) => {
+  const unit = useUnit($tasks);
+
+  if (id === undefined) {
+    return null;
+  }
+
+  return unit?.[id] ?? null;
 };
 
 export const events = {
@@ -86,4 +97,5 @@ export const events = {
 
 export const selectors = {
   useTasks,
+  useTask,
 };

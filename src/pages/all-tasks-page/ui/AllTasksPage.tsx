@@ -4,7 +4,7 @@ import { IconSearch } from '@tabler/icons-react';
 import { TasksList } from '@/widgets/task';
 import { actions } from '../const';
 
-export const MainPage = () => {
+export const AllTasksPage = () => {
   return (
     <>
       <TasksList />
