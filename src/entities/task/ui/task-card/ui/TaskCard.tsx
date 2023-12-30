@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Paper, Stack, Group, Flex, Text, Button } from '@mantine/core';
-import { TaskOverdueIcon, TaskPriorityIcon, TaskProgress } from '../..';
-import { DeleteButton } from '@/shared/ui';
+import {
+  TaskOverdueIcon,
+  TaskPriorityIcon,
+  TaskProgress,
+  TaskDeleteButton,
+} from '../..';
 import { toDate, humanizedDate } from '@/shared/utils';
 import { type Task } from '@/shared/types';
 import { taskModel } from '@/entities/task';
@@ -13,10 +17,6 @@ export interface TaskCardProps {
 export const TaskCard = ({ task }: TaskCardProps) => {
   const linkTo = `/${task.id}`;
   const isOverdue = toDate(task.expiresIn ?? '').getTime() < Date.now();
-
-  const onDeleteClick = () => {
-    taskModel.events.removeTask(task.id);
-  };
 
   const onToggleClick = () => {
     taskModel.events.toggleTask(task.id);
@@ -39,7 +39,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
           </Group>
           <Group>
             <TaskPriorityIcon variant={task.priority} />
-            <DeleteButton onClick={onDeleteClick} />
+            <TaskDeleteButton task={task} />
           </Group>
         </Flex>
         {task.description && <Text size="sm">{task.description}</Text>}

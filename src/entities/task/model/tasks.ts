@@ -1,4 +1,4 @@
-import { createStore, createEvent, combine } from 'effector';
+import { createStore, createEvent, combine, sample } from 'effector';
 import { useUnit } from 'effector-react';
 import { persist } from 'effector-storage';
 import { nanoid } from 'nanoid';
@@ -17,6 +17,15 @@ const addTask = createEvent<TaskBase>();
 const removeTask = createEvent<TaskId>();
 
 const toggleTask = createEvent<TaskId>();
+
+const markTaskToRemove = createEvent<TaskId>();
+
+const unmarkTaskToRemove = createEvent<TaskId>();
+
+sample({
+  clock: removeTask,
+  target: unmarkTaskToRemove,
+});
 
 export const $tasks = createStore<Record<TaskId, Task>>({})
   .on(addTask, (store, taskBase) => {
@@ -53,7 +62,22 @@ export const $tasks = createStore<Record<TaskId, Task>>({})
     };
   });
 
-export const $tasksList = combine($tasks, (tasks) => Object.values(tasks));
+export const $tasksToDelete = createStore<TaskId[]>([])
+  .on(markTaskToRemove, (store, taskId) => [...store, taskId])
+  .on(unmarkTaskToRemove, (store, taskId) =>
+    store.filter((entry) => entry !== taskId),
+  );
+
+$tasksToDelete.watch((s) => {
+  console.log(s);
+});
+
+export const $tasksList = combine(
+  $tasks,
+  $tasksToDelete,
+  (tasks, tasksToDelete) =>
+    Object.values(tasks).filter((task) => !tasksToDelete.includes(task.id)),
+);
 
 export const $tasksFiltered = combine(
   $tasksList,
@@ -61,8 +85,11 @@ export const $tasksFiltered = combine(
   (tasks, query) =>
     tasks.filter(
       (task) =>
-        (customCompareIf(task.title, query.text, compareText) ||
-          customCompareIf(task.title, query.text, compareText)) &&
+        customCompareIf(
+          task.title.concat(task.description ?? ''),
+          query.text,
+          compareText,
+        ) &&
         compareIf(task.priority, query.priority) &&
         compareIf(task.isCompleted, query.isCompleted) &&
         customCompareIf(task.expiresIn, query.isOverdue, compareExpiresIn),
@@ -93,6 +120,8 @@ export const events = {
   addTask,
   removeTask,
   toggleTask,
+  markTaskToRemove,
+  unmarkTaskToRemove,
 };
 
 export const selectors = {

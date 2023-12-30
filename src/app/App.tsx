@@ -1,3 +1,4 @@
+import { Notifications } from '@mantine/notifications';
 import {
   ThemeProvider,
   DateProvider,
@@ -7,11 +8,13 @@ import {
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/spotlight/styles.css';
+import '@mantine/notifications/styles.css';
 import './index.css';
 
 export const App = () => {
   return (
     <ThemeProvider>
+      <Notifications />
       <DateProvider>
         <ModalProvider>
           <Routing />

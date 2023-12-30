@@ -17,7 +17,7 @@ const resetQueryConfig = createEvent();
 
 export const $queryConfig = createStore<QueryConfig>({})
   .on(setQueryConfig, (store, payload) => ({ ...store, ...payload }))
-  .on(resetQueryConfig, () => ({}));
+  .reset(resetQueryConfig);
 
 persist({
   key: 'query-config',
