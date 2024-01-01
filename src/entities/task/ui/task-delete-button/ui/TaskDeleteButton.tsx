@@ -10,8 +10,9 @@ export interface TaskDeleteButtonProps {
 
 export const TaskDeleteButton = ({ task }: TaskDeleteButtonProps) => {
   const onClick = () => {
-    taskModel.events.markTaskToRemove(task.id);
+    let needRemove = true;
 
+    taskModel.events.markTaskToRemove(task.id);
     notifications.show({
       id: task.id,
       title: `Вы удалили задачу: ${task.title}`,
@@ -23,17 +24,15 @@ export const TaskDeleteButton = ({ task }: TaskDeleteButtonProps) => {
             variant="light"
             size="compact-xs"
             onClick={() => {
-              taskModel.events.unmarkTaskToRemove(task.id);
+              needRemove = false;
 
-              notifications.update({
-                id: task.id,
+              taskModel.events.unmarkTaskToRemove(task.id);
+              notifications.hide(task.id);
+              notifications.show({
                 title: `Вы вернули задачу: ${task.title}`,
                 message: 'Задача возвращена',
                 color: 'green',
                 icon: <IconCheck />,
-                withCloseButton: true,
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onClose: () => {},
               });
             }}
           >
@@ -43,8 +42,11 @@ export const TaskDeleteButton = ({ task }: TaskDeleteButtonProps) => {
       ),
       color: 'yellow',
       icon: <IconQuestionMark />,
-      withCloseButton: false,
       onClose: () => {
+        if (!needRemove) {
+          return;
+        }
+
         taskModel.events.removeTask(task.id);
       },
     });
