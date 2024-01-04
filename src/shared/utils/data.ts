@@ -9,6 +9,27 @@ export const toDate = (value: Date | string) => {
   return new Date();
 };
 
+export const tryParseInt = (
+  value: number | string | null | undefined,
+  defaultValue = 0,
+  radix?: number,
+) => {
+  if (Number.isNaN(value) || value === null || value === undefined) {
+    return defaultValue;
+  }
+
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  const parsedValue = parseInt(value, radix);
+  if (Number.isNaN(parsedValue)) {
+    return defaultValue;
+  }
+
+  return parsedValue;
+};
+
 export const customCompareIf = <V, N>(
   value: V,
   needle: N | undefined,

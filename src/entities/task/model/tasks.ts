@@ -3,6 +3,7 @@ import { useUnit } from 'effector-react';
 import { persist } from 'effector-storage';
 import { nanoid } from 'nanoid';
 import { $queryConfig } from './query-config';
+import { $paginationConfig } from './pagination-config';
 import { compareText, compareExpiresIn } from '../utils';
 import {
   createStorageAdapter,
@@ -110,6 +111,16 @@ export const $tasksFiltered = combine(
     ),
 );
 
+export const $tasksPaged = combine(
+  $tasksFiltered,
+  $paginationConfig,
+  (tasks, pagination) => {
+    const offset = (pagination.page - 1) * pagination.size;
+
+    return tasks.slice(offset, offset + pagination.size);
+  },
+);
+
 persist({
   key: 'tasks',
   store: $tasks,
@@ -117,7 +128,11 @@ persist({
 });
 
 const useTasks = () => {
-  return useUnit($tasksFiltered);
+  return useUnit($tasksPaged);
+};
+
+const useTasksCount = () => {
+  return useUnit($tasksFiltered).length;
 };
 
 const useTask = (id?: TaskId) => {
@@ -142,5 +157,6 @@ export const events = {
 
 export const selectors = {
   useTasks,
+  useTasksCount,
   useTask,
 };

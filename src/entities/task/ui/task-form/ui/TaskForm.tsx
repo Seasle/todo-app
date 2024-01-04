@@ -85,6 +85,7 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
                   style={{ display: form.values.title ? undefined : 'none' }}
                 />
               }
+              data-autofocus
               {...form.getInputProps('title')}
             />
           </Grid.Col>

@@ -1,6 +1,6 @@
 import { Stack, Button } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
-import { TasksFilter, FilteredTasks } from '@/features/task';
+import { TasksFilter, FilteredTasks, TasksPagination } from '@/features/task';
 import { openCreateTaskModal } from '@/entities/task';
 
 export const TasksList = () => {
@@ -16,7 +16,9 @@ export const TasksList = () => {
         Добавить задачу
       </Button>
       <TasksFilter />
+      <TasksPagination />
       <FilteredTasks />
+      <TasksPagination />
     </Stack>
   );
 };
