@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
+    "test": "vitest",
     "lint": "npm run lint:format && npm run lint:fix",
     "lint:verbose": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "npm run lint:verbose -- --fix",
@@ -54,6 +55,7 @@
     "prettier": "^3.1.1",
     "sass": "^1.69.6",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "vite": "^5.0.10",
+    "vitest": "^1.1.1"
   }
 }
