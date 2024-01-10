@@ -13,7 +13,7 @@ import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { useViewportSize } from '@mantine/hooks';
 import { IconCheck } from '@tabler/icons-react';
-import { priorityValues } from '../const';
+import { usePriorityValues } from '../hooks';
 import { ChoiceItem } from '@/shared/ui';
 import { useDelayedKeyOnResize } from '@/shared/hooks';
 import { type Task, type TaskPriority } from '@/shared/types';
@@ -50,6 +50,7 @@ export const TaskForm = ({ data, submitText, onSubmit }: TaskFormProps) => {
     },
   });
   const isSubmitting = useRef(false);
+  const priorityValues = usePriorityValues();
   const orientation = width < 1024 ? 'vertical' : 'horizontal';
 
   const onFormSubmit = useCallback(

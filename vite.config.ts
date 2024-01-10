@@ -8,6 +8,7 @@ export default defineConfig(({ command }) => ({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src/'),
+      '@testing-utils': resolve(__dirname, 'testing-utils/'),
     },
   },
   css: {

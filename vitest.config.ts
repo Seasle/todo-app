@@ -5,7 +5,10 @@ export default defineConfig((configEnv) =>
   mergeConfig(
     viteConfig(configEnv),
     defineConfig({
-      test: {},
+      test: {
+        setupFiles: './setupTest.ts',
+        environment: 'happy-dom',
+      },
     }),
   ),
 );

@@ -15,7 +15,7 @@ import {
   type OverdueFilterValue,
 } from './types';
 
-export const priorityValues: PriorityFilterValue[] = [
+export const usePriorityValues = (): PriorityFilterValue[] => [
   { value: 'ANY', icon: <IconAsterisk />, label: 'Любой приоритет' },
   {
     value: 'HIGH',
@@ -34,7 +34,7 @@ export const priorityValues: PriorityFilterValue[] = [
   },
 ];
 
-export const completedValues: CompletedFilterValue[] = [
+export const useCompletedValues = (): CompletedFilterValue[] => [
   { value: 'ANY', icon: <IconAsterisk />, label: 'Любые задачи' },
   {
     value: 'NOT_COMPLETED',
@@ -44,7 +44,7 @@ export const completedValues: CompletedFilterValue[] = [
   { value: 'COMPLETED', icon: <IconCheck />, label: 'Завершенные задачи' },
 ];
 
-export const overdueValues: OverdueFilterValue[] = [
+export const useOverdueValues = (): OverdueFilterValue[] => [
   { value: 'ANY', icon: <IconAsterisk />, label: 'Любые задачи' },
   { value: 'UNKNOWN', icon: <IconInfinity />, label: 'Задачи без срока' },
   {

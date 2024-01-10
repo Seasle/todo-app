@@ -19,7 +19,11 @@ import {
   fromCompleted,
   fromOverdue,
 } from '../utils';
-import { priorityValues, completedValues, overdueValues } from '../const';
+import {
+  usePriorityValues,
+  useCompletedValues,
+  useOverdueValues,
+} from '../hooks';
 import { taskQueryModel } from '@/entities/task';
 import { ChoiceItem } from '@/shared/ui';
 import classes from './TasksFilter.module.scss';
@@ -27,6 +31,9 @@ import classes from './TasksFilter.module.scss';
 export const TasksFilter = () => {
   const { width } = useViewportSize();
   const query = taskQueryModel.selectors.useQuery();
+  const priorityValues = usePriorityValues();
+  const completedValues = useCompletedValues();
+  const overdueValues = useOverdueValues();
   const textValue = query.text ?? '';
   const priorityValue = toPriority(query.priority);
   const completedValue = toCompleted(query.isCompleted);

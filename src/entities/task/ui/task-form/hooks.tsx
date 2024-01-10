@@ -1,7 +1,7 @@
 import { TaskPriorityIcon } from '@/entities/task';
 import { type PriorityVariantValue } from './types';
 
-export const priorityValues: PriorityVariantValue[] = [
+export const usePriorityValues = (): PriorityVariantValue[] => [
   {
     value: 'HIGH',
     icon: <TaskPriorityIcon variant="HIGH" />,
