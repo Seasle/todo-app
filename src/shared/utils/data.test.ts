@@ -5,6 +5,7 @@ import {
   tryParseInt,
   customCompareIf,
   compareIf,
+  clamp,
   excludeKey,
 } from './data';
 
@@ -153,6 +154,20 @@ describe('compareIf', () => {
 
   test('should return true if the value is undefined', () => {
     expect(compareIf(data.age, undefined)).toBe(true);
+  });
+});
+
+describe('clamp', () => {
+  test('clamp number between min and max', () => {
+    expect(clamp(0, 10, 5)).toBe(5);
+  });
+
+  test('clamp number less then min', () => {
+    expect(clamp(0, 10, -5)).toBe(0);
+  });
+
+  test('clamp number greater then max', () => {
+    expect(clamp(0, 10, 15)).toBe(10);
   });
 });
 
