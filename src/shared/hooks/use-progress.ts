@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { toDate, clamp } from '../utils/data';
+import { toDate, clamp } from '@/shared/utils';
 
 const calculateProgress = (start: Date, end: Date) => {
   const duration = end.getTime() - start.getTime();
